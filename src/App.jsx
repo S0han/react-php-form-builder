@@ -20,7 +20,7 @@ const App = () => {
       id: Date.now(),
       type,
       label: "New Label",
-      placeholder: "",
+      placeholder: "Enter placeholder",
       required: false,
     };
 
@@ -45,6 +45,14 @@ const App = () => {
     dispatch(reorderFields(reorderedFields));
   };
 
+  const handleLabelChange = (id, value) => {
+    dispatch(updateLabel(id, value));
+  };
+
+  const handlePlaceholderChange = (id, value) => {
+    dispatch(updatePlaceholder(id, value));
+  };
+
   return (
     <div>
       <button onClick={() => handleAddField("textInput")}>Add Text Input</button>
@@ -63,7 +71,7 @@ const App = () => {
               {...provided.droppableProps}
               style={{
                 padding: 10,
-                backgroundColor: "#f9f9f9", // Optional for better visibility
+                backgroundColor: "#f9f9f9",
                 borderRadius: 5,
               }}
             >
@@ -80,9 +88,25 @@ const App = () => {
                         margin: 5,
                         border: "1px solid gray",
                         backgroundColor: "#f4f4f4",
-                        borderRadius: 4, // Optional for smoother corners
+                        borderRadius: 4,
                       }}
                     >
+                      <div>
+                        <input
+                          type="text"
+                          value={field.label}
+                          onChange={(e) => handleLabelChange(field.id, e.target.value)}
+                          placeholder="Edit Label"
+                          style={{ marginBottom: "5px", width: "100%" }}
+                        />
+                        <input
+                          type="text"
+                          value={field.placeholder}
+                          onChange={(e) => handlePlaceholderChange(field.id, e.target.value)}
+                          placeholder="Edit Placeholder"
+                          style={{ marginBottom: "5px", width: "100%" }}
+                        />
+                      </div>
                       {field.type === "textInput" && <TextInput {...field} />}
                       {field.type === "textArea" && <TextArea {...field} />}
                       {field.type === "selectDropdown" && <DropDown {...field} />}
