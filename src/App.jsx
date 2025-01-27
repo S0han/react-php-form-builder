@@ -4,6 +4,7 @@ import SelectDropdown from './components/dropDown';
 import Checkbox from './components/checkBox';
 import RadioButtons from './components/radioButtons';
 import DatePicker from './components/datePicker';
+import FileUpload from './components/fileUpload';
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
         <Checkbox />
         <RadioButtons options={['test']} />
         <DatePicker />
+        <FileUpload />
       </div>
     );
   };
