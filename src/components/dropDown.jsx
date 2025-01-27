@@ -4,7 +4,7 @@ const SelectDropdown = ({ label, options = [], required }) => {
   return (
     <div>
       <label>{label}</label>
-      <select required={required} className="form-control">
+      <select required={required}>
         {
           options.map((option, index) => (
             <option key={index} value={option}>

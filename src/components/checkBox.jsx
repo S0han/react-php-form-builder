@@ -2,7 +2,7 @@ import React from "react";
 
 const Checkbox = ({ label }) => {
   return (
-    <div className="form-group">
+    <div>
       <label>
         <input type="checkbox" /> {label}
       </label>
