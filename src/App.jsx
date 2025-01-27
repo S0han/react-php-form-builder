@@ -1,5 +1,11 @@
+import TextInput from './components/textInput';
+
 const App = () => {
-    return <h1>Hello, World!</h1>;
+    return (
+      <div>
+        <TextInput />
+      </div>
+    );
   };
   
   export default App;
