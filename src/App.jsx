@@ -9,13 +9,6 @@ import FileUpload from './components/fileUpload';
 const App = () => {
     return (
       <div>
-        <TextInput />
-        <TextArea />
-        <SelectDropdown />
-        <Checkbox />
-        <RadioButtons options={['test']} />
-        <DatePicker />
-        <FileUpload />
       </div>
     );
   };

@@ -1,17 +1,17 @@
 import React from "react";
 
-const SelectDropdown = ({ label, options = [], required, onChange }) => {
+const SelectDropdown = ({ label, options = [], required }) => {
   return (
-    <div className="form-group">
-      <label>
-        {label} {required && "*"}
-      </label>
-      <select required={required} onChange={onChange} className="form-control">
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
+    <div>
+      <label>{label}</label>
+      <select required={required} className="form-control">
+        {
+          options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))
+        }
       </select>
     </div>
   );

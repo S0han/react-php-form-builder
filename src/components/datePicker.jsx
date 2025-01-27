@@ -1,17 +1,10 @@
 import React from "react";
 
-const DatePicker = ({ label, required, onChange }) => {
+const DatePicker = ({ label, required }) => {
   return (
-    <div className="form-group">
-      <label>
-        {label} {required && "*"}
-      </label>
-      <input
-        type="date"
-        required={required}
-        onChange={onChange}
-        className="form-control"
-      />
+    <div>
+      <label>{label}</label>
+      <input type="date" required={required} />
     </div>
   );
 };

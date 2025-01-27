@@ -1,8 +1,8 @@
 import React from "react";
 
-const RadioButtons = ({ label, options = [], onChange }) => {
+const RadioButtons = ({ label, options = [] }) => {
   return (
-    <div className="form-group">
+    <div>
       <label>{label}</label>
       {options.map((option, index) => (
         <div key={index}>
@@ -11,7 +11,6 @@ const RadioButtons = ({ label, options = [], onChange }) => {
               type="radio"
               name={label}
               value={option}
-              onChange={onChange}
             />{" "}
             {option}
           </label>

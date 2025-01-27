@@ -1,17 +1,10 @@
 import React from "react";
 
-const TextArea = ({ label, placeholder, required, onChange }) => {
+const TextArea = ({ label, placeholder, required }) => {
   return (
-    <div className="form-group">
-      <label>
-        {label} {required && "*"}
-      </label>
-      <textarea
-        placeholder={placeholder}
-        required={required}
-        onChange={onChange}
-        className="form-control"
-      ></textarea>
+    <div>
+      <label>{label}</label>
+      <textarea placeholder={placeholder} required={required}></textarea>
     </div>
   );
 };

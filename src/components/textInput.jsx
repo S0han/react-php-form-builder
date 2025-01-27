@@ -1,18 +1,10 @@
 import React from "react";
 
-const TextInput = ({ label, placeholder, required, onChange }) => {
+const TextInput = ({ label, placeholder, required }) => {
   return (
-    <div className="form-group">
-      <label>
-        {label} {required && "*"}
-      </label>
-      <input
-        type="text"
-        placeholder={placeholder}
-        required={required}
-        onChange={onChange}
-        className="form-control"
-      />
+    <div>
+      <label>{label}</label>
+      <input type="text" placeholder={placeholder} required={required} />
     </div>
   );
 };

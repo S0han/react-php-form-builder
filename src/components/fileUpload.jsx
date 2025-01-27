@@ -1,17 +1,10 @@
 import React from "react";
 
-const FileUpload = ({ label, required, onChange }) => {
+const FileUpload = ({ label, required }) => {
   return (
-    <div className="form-group">
-      <label>
-        {label} {required && "*"}
-      </label>
-      <input
-        type="file"
-        required={required}
-        onChange={onChange}
-        className="form-control"
-      />
+    <div>
+      <label>{label}</label>
+      <input type="file" required={required} />
     </div>
   );
 };
