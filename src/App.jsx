@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addField, reorderFields, updateLabel, updatePlaceholder } from './redux/actions/formFieldActions';
+import { addField, reorderFields, updateLabel, updatePlaceholder, updateOptions } from './redux/actions/formFieldActions';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import TextInput from './components/textInput';
@@ -20,7 +20,8 @@ const App = () => {
       id: Date.now(),
       type,
       label: "New Label",
-      placeholder: "Enter placeholder",
+      placeholder: type === "textInput" || type === "textArea" ? "Enter placeholder" : "",  // Removed "fileUpload" and "datePicker"
+      options: type === "selectDropdown" || type === "checkbox" || type === "radioButtons" ? ["Option 1"] : [],
       required: false,
     };
 
@@ -51,6 +52,14 @@ const App = () => {
 
   const handlePlaceholderChange = (id, value) => {
     dispatch(updatePlaceholder(id, value));
+  };
+
+  const handleOptionChange = (fieldId, index, value) => {
+    dispatch(updateOptions(fieldId, index, value));
+  };
+
+  const handleAddOption = (fieldId) => {
+    dispatch(updateOptions(fieldId, null, "New Option"));
   };
 
   return (
@@ -99,14 +108,34 @@ const App = () => {
                           placeholder="Edit Label"
                           style={{ marginBottom: "5px", width: "100%" }}
                         />
-                        <input
-                          type="text"
-                          value={field.placeholder}
-                          onChange={(e) => handlePlaceholderChange(field.id, e.target.value)}
-                          placeholder="Edit Placeholder"
-                          style={{ marginBottom: "5px", width: "100%" }}
-                        />
+                        {field.type !== "selectDropdown" && field.type !== "checkbox" && field.type !== "radioButtons" && field.type !== "datePicker" && field.type !== "fileUpload" && (
+                          <input
+                            type="text"
+                            value={field.placeholder}
+                            onChange={(e) => handlePlaceholderChange(field.id, e.target.value)}
+                            placeholder="Edit Placeholder"
+                            style={{ marginBottom: "5px", width: "100%" }}
+                          />
+                        )}
                       </div>
+
+                      {field.type === "selectDropdown" || field.type === "checkbox" || field.type === "radioButtons" ? (
+                        <div>
+                          <button onClick={() => handleAddOption(field.id)}>Add Option</button>
+                          {field.options.map((option, optionIndex) => (
+                            <div key={optionIndex} style={{ display: "flex", marginBottom: "5px" }}>
+                              <input
+                                type="text"
+                                value={option}
+                                onChange={(e) => handleOptionChange(field.id, optionIndex, e.target.value)}
+                                placeholder="Option"
+                                style={{ marginRight: "5px", width: "80%" }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+
                       {field.type === "textInput" && <TextInput {...field} />}
                       {field.type === "textArea" && <TextArea {...field} />}
                       {field.type === "selectDropdown" && <DropDown {...field} />}

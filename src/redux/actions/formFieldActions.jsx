@@ -25,3 +25,15 @@ export const updatePlaceholder = (id, newPlaceholder) => {
         payload: { id, newPlaceholder },
     };
 };
+
+export const updateOptions = (fieldId, optionIndex, value) => {
+    return {
+      type: "UPDATE_OPTIONS",
+      payload: {
+        fieldId,
+        optionIndex,
+        value,
+      },
+    };
+};
+  

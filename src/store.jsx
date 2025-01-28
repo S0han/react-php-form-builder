@@ -18,6 +18,22 @@ const formReducer = (state = [], action) => {
           ? { ...field, placeholder: action.payload.newPlaceholder }
           : field
       );
+    case "UPDATE_OPTIONS":
+      return state.map((field) =>
+        field.id === action.payload.fieldId
+          ? {
+              ...field,
+              options:
+                action.payload.optionIndex !== null
+                  ? field.options.map((option, index) =>
+                      index === action.payload.optionIndex
+                        ? action.payload.value
+                        : option
+                    )
+                  : [...field.options, action.payload.value], // Add new option if index is null
+            }
+          : field
+      );
     default:
       return state;
   }
