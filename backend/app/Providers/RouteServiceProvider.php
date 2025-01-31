@@ -11,16 +11,18 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     public const HOME = '/home';
-    
+
     public function boot()
     {
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            // Load API routes (routes/api.php)
             Route::middleware('api')
-                ->prefix('api')
+                ->prefix('api') // Adds "/api" prefix to all routes in api.php
                 ->group(base_path('routes/api.php'));
 
+            // Load web routes (routes/web.php)
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
