@@ -5,3 +5,5 @@ use App\Http\Controllers\FormController;
 
 Route::post('/submit-form', [FormController::class, 'submit']);
 Route::post('/forms/save', [FormController::class, 'saveForm']);
+Route::get('/forms/list', [FormController::class, 'listForms']);
+Route::get('/forms/{id}', [FormController::class, 'fetchForm']);
