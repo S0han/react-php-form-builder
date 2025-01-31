@@ -55,4 +55,25 @@ class FormController extends Controller
 
         return response()->json($form);
     }
+
+    public function updateForm(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'form_name' => 'sometimes|string|max:255',
+            'form_data' => 'sometimes|json',
+        ]);
+
+        $form = Form::find($id);
+
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
+        $form->update($validatedData);
+
+        return response()->json([
+            'message' => 'Form updated successfully!',
+            'form' => $form,
+        ]);
+    }
 }
