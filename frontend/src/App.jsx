@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addField, reorderFields, updateLabel, updatePlaceholder, updateOptions } from './redux/actions/formFieldActions';
+import { addField, reorderFields, updateLabel, updatePlaceholder, updateOptions, saveForm } from './redux/actions/formFieldActions';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import TextInput from './components/textInput';
@@ -14,13 +14,14 @@ import FileUpload from './components/fileUpload';
 const App = () => {
   const dispatch = useDispatch();
   const formFields = useSelector((state) => state.formFields);
+  const [formName, setFormName] = useState("");
 
   const handleAddField = (type) => {
     const newField = {
       id: Date.now(),
       type,
       label: "New Label",
-      placeholder: type === "textInput" || type === "textArea" ? "Enter placeholder" : "",  // Removed "fileUpload" and "datePicker"
+      placeholder: type === "textInput" || type === "textArea" ? "Enter placeholder" : "",
       options: type === "selectDropdown" || type === "checkbox" || type === "radioButtons" ? ["Option 1"] : [],
       required: false,
     };
@@ -46,24 +47,28 @@ const App = () => {
     dispatch(reorderFields(reorderedFields));
   };
 
-  const handleLabelChange = (id, value) => {
-    dispatch(updateLabel(id, value));
-  };
-
-  const handlePlaceholderChange = (id, value) => {
-    dispatch(updatePlaceholder(id, value));
-  };
-
-  const handleOptionChange = (fieldId, index, value) => {
-    dispatch(updateOptions(fieldId, index, value));
-  };
-
-  const handleAddOption = (fieldId) => {
-    dispatch(updateOptions(fieldId, null, "New Option"));
+  const handleSaveForm = () => {
+    if (!formName) {
+      alert("Please enter a form name.");
+      return;
+    }
+    dispatch(saveForm(formName, formFields));
   };
 
   return (
     <div>
+      <h1>Form Builder</h1>
+      <div>
+        <input
+          type="text"
+          value={formName}
+          onChange={(e) => setFormName(e.target.value)}
+          placeholder="Enter form name"
+        />
+        <button onClick={handleSaveForm}>Save Form</button>
+      </div>
+
+      {/* Rest of your form builder UI */}
       <button onClick={() => handleAddField("textInput")}>Add Text Input</button>
       <button onClick={() => handleAddField("textArea")}>Add Text Area</button>
       <button onClick={() => handleAddField("selectDropdown")}>Add Select</button>
@@ -100,11 +105,12 @@ const App = () => {
                         borderRadius: 4,
                       }}
                     >
+                      {/* Render form field UI */}
                       <div>
                         <input
                           type="text"
                           value={field.label}
-                          onChange={(e) => handleLabelChange(field.id, e.target.value)}
+                          onChange={(e) => dispatch(updateLabel(field.id, e.target.value))}
                           placeholder="Edit Label"
                           style={{ marginBottom: "5px", width: "100%" }}
                         />
@@ -112,7 +118,7 @@ const App = () => {
                           <input
                             type="text"
                             value={field.placeholder}
-                            onChange={(e) => handlePlaceholderChange(field.id, e.target.value)}
+                            onChange={(e) => dispatch(updatePlaceholder(field.id, e.target.value))}
                             placeholder="Edit Placeholder"
                             style={{ marginBottom: "5px", width: "100%" }}
                           />
@@ -121,13 +127,13 @@ const App = () => {
 
                       {field.type === "selectDropdown" || field.type === "checkbox" || field.type === "radioButtons" ? (
                         <div>
-                          <button onClick={() => handleAddOption(field.id)}>Add Option</button>
+                          <button onClick={() => dispatch(updateOptions(field.id, null, "New Option"))}>Add Option</button>
                           {field.options.map((option, optionIndex) => (
                             <div key={optionIndex} style={{ display: "flex", marginBottom: "5px" }}>
                               <input
                                 type="text"
                                 value={option}
-                                onChange={(e) => handleOptionChange(field.id, optionIndex, e.target.value)}
+                                onChange={(e) => dispatch(updateOptions(field.id, optionIndex, e.target.value))}
                                 placeholder="Option"
                                 style={{ marginRight: "5px", width: "80%" }}
                               />

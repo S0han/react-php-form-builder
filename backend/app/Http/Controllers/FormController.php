@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Form;
 
 class FormController extends Controller
 {
@@ -26,7 +27,6 @@ class FormController extends Controller
             'form_data' => 'required|json',
         ]);
 
-        // Save the form to the database
         $form = Form::create([
             'form_name' => $validated['form_name'],
             'form_data' => $validated['form_data'],

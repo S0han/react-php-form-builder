@@ -4,7 +4,7 @@ export const saveForm = (formName, formFields) => async (dispatch) => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/api/forms/save', {
       form_name: formName,
-      form_data: JSON.stringify(formFields), // Convert form fields to JSON
+      form_data: JSON.stringify(formFields),
     });
 
     console.log('Form saved successfully:', response.data);
