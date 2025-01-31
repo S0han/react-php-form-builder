@@ -18,4 +18,23 @@ class FormController extends Controller
             'data' => $validated,
         ]);
     }
+
+    public function saveForm(Request $request)
+    {
+        $validated = $request->validate([
+            'form_name' => 'required|string|max:255',
+            'form_data' => 'required|json',
+        ]);
+
+        // Save the form to the database
+        $form = Form::create([
+            'form_name' => $validated['form_name'],
+            'form_data' => $validated['form_data'],
+        ]);
+
+        return response()->json([
+            'message' => 'Form saved successfully!',
+            'form' => $form,
+        ], 201);
+    }
 }
