@@ -37,4 +37,22 @@ class FormController extends Controller
             'form' => $form,
         ], 201);
     }
+
+    public function listForms()
+    {
+        $forms = Form::all();
+
+        return response()->json($forms);
+    }
+
+    public function fetchForm($id)
+    {
+        $form = Form::find($id);
+
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
+        return response()->json($form);
+    }
 }
