@@ -35,6 +35,17 @@ const formReducer = (state = [], action) => {
             }
           : field
       );
+    case "SET_FORM_FIELDS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const formNameReducer = (state = "", action) => {
+  switch (action.type) {
+    case "SET_FORM_NAME":
+      return action.payload;
     default:
       return state;
   }
@@ -42,6 +53,7 @@ const formReducer = (state = [], action) => {
 
 const rootReducer = combineReducers({
   formFields: formReducer,
+  formName: formNameReducer,
 });
 
 const store = createStore(
